@@ -4,32 +4,6 @@ const Volunteer = require("../models/volunteerModel");
 const Help = require("../models/helpModel");
 var nodemailer = require('nodemailer');
 
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'rai.peter2@gmail.com',
-    pass: 'peter319645296'
-  }
-});
-
-var mailOptions = {
-  from: 'rai.peter2@gmail.com',
-  to: 'raipeter1@hotmail.com, 7829028295@nma.Vodafone.in',
-  subject: 'Sending Email using Node.js',
-  text: 'That was easy!'
-};
-
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
-
-
-
-
 // adding volunteer
 router.route("/add-volunteer").post((req,res)=>{
     const name = req.body.name;
@@ -49,7 +23,36 @@ router.route("/add-volunteer").post((req,res)=>{
         occupation
     });
     newVolunteer.save();
+console.log(email);
+    mail(email);
+
 })
+
+function mail(addres){
+  let transporter = nodemailer.createTransport({
+      service:'gmail',
+      auth:{
+          user:'samaptirouth180@gmail.com',
+          pass:'9749101235@'
+      }
+  });
+  
+  let mailoptions ={
+      from:'samaptirouth180@gmail.com',
+      to:`${addres}`,
+      subject:'testing',
+      text:'Thank you for contacting. We will get back to you'
+  };
+  
+  transporter.sendMail(mailoptions, function (err, info) {
+      if(err){
+          console.log(err)
+      }else{
+          console.log("it worked")
+      }
+   });
+  
+  }
 
 // adding help form
 router.route("/help").post((req,res)=>{
